@@ -24,14 +24,18 @@ app.get('/', (req, res) => {
   res.json({ msg: 'welcome to the image upload API 👋' })
 })
 
-app.post('/image', uploads.single('image'), async (req, res) => {
+app.get('/', (req, res) => {
+  res.json({  msg: 'show all images '})
+})
+
+app.post('/images', uploads.single('image'), async (req, res) => {
   if (!req.file) return res.json({ msg: 'no file uploaded! ' })
- process.env.CLOUDINARY_URL
-  const test = await  cloudinary.uploader.upload(req.file.path)
-  console.log(test)
+  const cloudImageData = await cloudinary.uploader.upload(req.file.path)
+  console.log(cloudImageData)
+  const cloudinaryUrl = `https://res.cloudinary.com/dkchpbore/image/upload/v1593119998/${cloudImageData.public_id}.png`
   // remove the file after finishing up with it
   unlinkSync(req.file.path)
-  res.json({ msg: 'file upload successfully!' })
+  res.json({ cloudinaryUrl })
 })
 
 app.listen(PORT, () => console.log(`listening to smooth sounds of port ${PORT} in the morning 🌊`))

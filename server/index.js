@@ -11,13 +11,14 @@ const app = express()
 const PORT = 8000
 
 // middlewares
-app.use(express.static('uploads'))
-app.use((req, res, next) => {
-  console.log(`incoming request: ${new Date().toLocaleTimeString()} ${req.method} ${req.url}`)
-  if (req.body) console.log(`body: ${req.body}`)
-  next()
-})
 app.use(cors())
+app.use(express.static('uploads'))
+// app.use((req, res, next) => {
+//   console.log(`incoming request:`, new Date().toLocaleTimeString(),req.method, req.url)
+//   console.log('body:', req.body)
+//   console.log(`file:`, req.file)
+//   next()
+// })
 
 const uploads = multer({ dest: 'uploads/' })
 
@@ -30,6 +31,8 @@ app.get('/', (req, res) => {
 })
 
 app.post('/images', uploads.single('image'), async (req, res) => {
+  // console.log(req.body, req.file)
+  console.log(req)
   if (!req.file) return res.json({ msg: 'no file uploaded! ' })
   const cloudImageData = await cloudinary.uploader.upload(req.file.path)
   console.log(cloudImageData)

@@ -17,5 +17,5 @@
 * cd into `client`
 * run `npm i`
 * touch `.env.local` 
-* add `REACT_APP_SERVER_URL='localhost:8000'` to the `.env.local` 
+* add `REACT_APP_SERVER_URL=http://localhost:8000` to the `.env.local` 
 * run `npm run start` to fire up the react app

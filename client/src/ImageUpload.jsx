@@ -12,15 +12,15 @@ export default function ImageUpload() {
     try {
       // build form and get headers
       const formData = new FormData()
-      formData.append('image', formData)
+      formData.append('image', formImg)
 
       const options = {
         headers: {
-            'content-type': 'multipart/form-data'
+          "Content-Type": "multipart/form-data"
         }
-    }
+      }
       // make req
-      const { data } = await axios.post(process.env.REACT_APP_SERVER_URL + '/images', formData)
+      const { data } = await axios.post(process.env.REACT_APP_SERVER_URL + '/images', formData, options)
       console.log(data)
       
     } catch (err) {

@@ -1,4 +1,5 @@
-multer
+
 node_modules
 package-lock.json
 uploads/*
+.env

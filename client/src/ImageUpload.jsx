@@ -1,19 +1,22 @@
-import { useState } from 'react'
+import { 
+  useState,
+  useRef 
+} from 'react'
 import axios from 'axios'
-// import FormData from 'form-data'
 
 export default function ImageUpload() {
   const [displayImg, setDisplayImg] = useState('')
   const [formImg, setFormImg] = useState('')
   const [msg, setMsg] = useState('')
 
+  const inputRef = useRef(null) 
+
   const handleSubmit = async e => {
     e.preventDefault()
     try {
-      // build form and get headers
+      // build form and headers
       const formData = new FormData()
       formData.append('image', formImg)
-
       const options = {
         headers: {
           "Content-Type": "multipart/form-data"
@@ -22,10 +25,13 @@ export default function ImageUpload() {
       // make req
       const { data } = await axios.post(process.env.REACT_APP_SERVER_URL + '/images', formData, options)
       console.log(data)
-      
+      // update state
+      setDisplayImg(data.cloudinaryUrl)
+      // reset input val
+      if (inputRef) inputRef.current.value = ''
     } catch (err) {
       console.log(err)
-      setMsg('shit fucked up 🤬')
+      setMsg('ooooooooo noooooo 🤬')
     }
   }
 
@@ -53,6 +59,7 @@ export default function ImageUpload() {
           <input 
             type='file'
             id='image-upload'
+            ref={inputRef}
             onChange={e => setFormImg(e.target.files[0])}
           />
         </div>

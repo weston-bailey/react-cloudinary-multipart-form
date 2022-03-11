@@ -5,7 +5,7 @@ const path = require('path')
 const { unlinkSync } = require('fs')
 const multer = require('multer')
 const cloudinary = require('cloudinary').v2
-
+const cors = require('cors')
 // config express app
 const app = express()
 const PORT = 8000
@@ -17,6 +17,7 @@ app.use((req, res, next) => {
   if (req.body) console.log(`body: ${req.body}`)
   next()
 })
+app.use(cors())
 
 const uploads = multer({ dest: 'uploads/' })
 
